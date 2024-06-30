@@ -3,6 +3,8 @@
 #include <iostream>
 #include <vector>
 
+#define FPS_INTERVAL 1.0
+
 #include "RenderWindow.hpp"
 #include "Entity.hpp"
 #include "Vector2.hpp"
@@ -12,6 +14,10 @@ const char* gameTitle = "Brick Breaker";
 const int windowWidth = 800;
 const int windowHeight = 400;
 bool gameRunning = true;
+
+Uint32 fps_lasttime = SDL_GetTicks(); //the last recorded time.
+Uint32 fps_current; //the current FPS.
+Uint32 fps_frames = 0; //frames passed since the last recorded fps.
 
 int WinMain() {
 
@@ -38,7 +44,6 @@ int WinMain() {
   SDL_Event event;
 
   while (gameRunning) {
-    SDL_Delay(0.1);
     while (SDL_PollEvent(&event)) {
       if (event.type == SDL_QUIT)
         gameRunning = false;
@@ -49,8 +54,8 @@ int WinMain() {
     window.fill(255, 255, 255, 255);
     window.render(plr);
     window.display();
-  }
 
+  }
   window.cleanUp();
   SDL_Quit();
 
